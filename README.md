@@ -1,7 +1,5 @@
 ## Deploy na Vercel
 
-Vercel jest jedną z najpopularniejszych platform do hostingu aplikacji Next.js oraz Nuxt.js.
-
 1. **Zainstaluj Vercel CLI**:
     ```sh
     npm install -g vercel
@@ -20,8 +18,6 @@ Vercel jest jedną z najpopularniejszych platform do hostingu aplikacji Next.js 
     Postępuj zgodnie z instrukcjami na ekranie, aby skonfigurować projekt.
 
 ## Deploy na Netlify
-
-Netlify jest kolejną popularną platformą do hostingu aplikacji statycznych i Jamstack.
 
 1. **Zainstaluj Netlify CLI**:
     ```sh
