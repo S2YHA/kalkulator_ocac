@@ -4,25 +4,18 @@
       <CardTitle>Kalkulator OC/AC</CardTitle>
     </CardHeader>
     <CardContent class="grid gap-6">
-      <div class="grid grid-cols-2 gap-4">
-        <div class="grid gap-2">
-          <Label for="netto">Netto</Label>
-          <Input
-            id="netto"
-            type="number"
-            v-model="net"
-            @input="calculateGross"
-          />
-        </div>
-        <div class="grid gap-2">
-          <Label for="brutto">Brutto</Label>
-          <Input
-            id="brutto"
-            type="number"
-            v-model="gross"
-            @input="calculateNet"
-          />
-        </div>
+      <div class="grid gap-2">
+        <Label for="netto">Netto</Label>
+        <Input id="netto" type="number" v-model="net" @input="calculateGross" />
+      </div>
+      <div class="grid gap-2">
+        <Label for="brutto">Brutto</Label>
+        <Input
+          id="brutto"
+          type="number"
+          v-model="gross"
+          @input="calculateNet"
+        />
       </div>
       <div class="grid gap-2">
         <Label for="subject">Rok produkcji</Label>
@@ -40,24 +33,22 @@
         </div>
       </div>
       <div class="grid gap-2">
-        <Label for="subject">Raty</Label>
-        <RadioGroup v-model="rates" default-value="0">
-          <div class="flex items-center space-x-2">
-            <RadioGroupItem id="option-one" value="0" />
-            <Label for="option-one">Brak</Label>
-          </div>
-          <div class="flex items-center space-x-2">
-            <RadioGroupItem id="option-two" value="2" />
-            <Label for="option-two">2</Label>
-          </div>
-          <div class="flex items-center space-x-2">
-            <RadioGroupItem id="option-three" value="4" />
-            <Label for="option-three">4</Label>
-          </div>
-        </RadioGroup>
-      </div>
-      <div class="grid gap-2">
-        <Label class="text-center">{{ price }}</Label>
+        <p v-if="price.limitations" class="text-center">
+          {{ price.limitations }}
+        </p>
+        <div v-if="price.insurancePrice">
+          <p class="text-center">Składka ubezpieczenia:</p>
+          <p class="text-center">
+            <b>{{ price.insurancePrice }}</b>
+          </p>
+          <p class="text-center">Raty</p>
+          <p v-for="installment in price.installments" class="text-center">
+            {{ installment.installmentCount }} x
+            <b>{{ installment.installmentPrice }}</b>
+
+            - {{ installment.installmentFull }}
+          </p>
+        </div>
       </div>
     </CardContent>
     <CardFooter class="space-x-2">
@@ -72,8 +63,8 @@ const net = ref(0);
 const gross = ref(0);
 const year = ref(null);
 const drivePlus = ref(true);
-const rates = ref("0");
-const price = ref(null);
+const installmentCount = ref("0");
+const price = ref({});
 
 const calculateNet = () => {
   net.value = gross.value / 1.23;
@@ -83,8 +74,16 @@ const calculateGross = () => {
   gross.value = net.value * 1.23;
 };
 
-const calculate = () => {
-  console.log("Calculating...");
+const calculate = async () => {
+  price.value = await $fetch("/api/calculate", {
+    method: "POST",
+    body: {
+      net: net.value,
+      year: year.value,
+      drivePlus: drivePlus.value,
+      installmentCount: installmentCount.value,
+    },
+  });
 };
 
 const clear = () => {
@@ -92,7 +91,7 @@ const clear = () => {
   gross.value = 0;
   year.value = null;
   drivePlus.value = true;
-  rates.value = "0";
-  price.value = null;
+  installmentCount.value = "0";
+  price.value = {};
 };
 </script>
