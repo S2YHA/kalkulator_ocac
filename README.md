@@ -1,75 +1,45 @@
-# Nuxt 3 Minimal Starter
+## Deploy na Vercel
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Vercel jest jedną z najpopularniejszych platform do hostingu aplikacji Next.js oraz Nuxt.js.
 
-## Setup
+1. **Zainstaluj Vercel CLI**:
+    ```sh
+    npm install -g vercel
+    ```
 
-Make sure to install the dependencies:
+2. **Zaloguj się do Vercel**:
+    ```sh
+    vercel login
+    ```
 
-```bash
-# npm
-npm install
+3. **Wdróż aplikację**:
+    W katalogu głównym projektu uruchom:
+    ```sh
+    vercel
+    ```
+    Postępuj zgodnie z instrukcjami na ekranie, aby skonfigurować projekt.
 
-# pnpm
-pnpm install
+## Deploy na Netlify
 
-# yarn
-yarn install
+Netlify jest kolejną popularną platformą do hostingu aplikacji statycznych i Jamstack.
 
-# bun
-bun install
-```
+1. **Zainstaluj Netlify CLI**:
+    ```sh
+    npm install -g netlify-cli
+    ```
 
-## Development Server
+2. **Zaloguj się do Netlify**:
+    ```sh
+    netlify login
+    ```
 
-Start the development server on `http://localhost:3000`:
+3. **Zbuduj aplikację Nuxt 3**:
+    ```sh
+    npm run build
+    ```
 
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+4. **Wdróż aplikację**:
+    ```sh
+    netlify deploy --prod --dir=.output/public
+    ```
+    Użyj `--dir=.output/public` jako katalogu, ponieważ Nuxt 3 domyślnie buduje aplikację w `./output/public`.
